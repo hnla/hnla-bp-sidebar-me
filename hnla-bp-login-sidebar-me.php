@@ -36,14 +36,15 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 
 		extract( $args );
 		
+		// What title should we show, loggedin title or form title?
 		if( ! is_user_logged_in() ):
-			$box_title = $instance['form_title'];
+			$box_title = esc_attr( $instance['form_title'] );
 		else:
-			$box_title = $instance['title'];
+			$box_title = esc_attr( $instance['title'] );
 		endif;
 		
 		echo $before_widget;
-		if( $instance['title'] ) {
+		if( ''!== $box_title ) {
 		echo $before_title .
 		     $box_title .
 		     $after_title; 
@@ -63,7 +64,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			<div id="sidebar-me-user">
 			
 				<a href="<?php echo bp_loggedin_user_domain() ?>">
-				<?php bp_loggedin_user_avatar( 'type=thumb&width=' . $instance['avatar_width'] . '&height=' . $instance['avatar_height'] . '' ) ?>
+				<?php bp_loggedin_user_avatar( 'type=thumb&width=' . esc_attr( $instance['avatar_width'] ) . '&height=' . esc_attr( $instance['avatar_height'] ) . '' ) ?>
 				</a>
 
 				<p class="user-link clearfix"><span class="your-name"><?php echo bp_core_get_userlink( bp_loggedin_user_id() ); ?></span></p>
@@ -75,7 +76,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 
  	<div id="user-sidebar-notifications">
 
-	<?php if( '1' == $instance['notify_list'] ) : // showing or hidding the list? ?>
+	<?php if( 1 == $instance['notify_list'] ) : // showing or hidding the list? ?>
 	<?php if( $notifications = bp_core_get_notifications_for_user( bp_loggedin_user_id() ) ) : ?>
 				
 			<h3 class="notification-title logged-in-user">
@@ -163,11 +164,11 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		$instance['title'] = strip_tags( $new_instance['title'] );
-		$instance['form_title'] = strip_tags( $new_instance['form_title'] );
-		$instance['notify_list'] = strip_tags( $new_instance['notify_list'] );
-		$instance['avatar_height'] = strip_tags( $new_instance['avatar_height'] );
-		$instance['avatar_width'] = strip_tags( $new_instance['avatar_width'] );
+		$instance['title'] = sanitize_text_field( $new_instance['title'] );
+		$instance['form_title'] = sanitize_text_field( $new_instance['form_title'] );
+		$instance['notify_list'] = absint( strip_tags( $new_instance['notify_list'] ) );
+		$instance['avatar_height'] = sanitize_text_field( $new_instance['avatar_height'] );
+		$instance['avatar_width'] = sanitize_text_field( $new_instance['avatar_width'] );
 
 		return $instance;
 	}
@@ -182,14 +183,12 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 		?>
 		<p><?php _e('Title and form title will switch depending on login/logout view, leave empty if no display wanted.', 'hnla'); ?></p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget title', 'hnla' ); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" style="width: 30%" />
-			</label>
+			<label style="display:block;" for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget Title', 'hnla' ); ?></label>
+			<input style="width: 200px" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" style="width: 30%" />			
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'form_title' ); ?>"><?php _e( 'Login form title', 'hnla' ); ?> 
-				<input class="widefat" id="<?php echo $this->get_field_id( 'form_title' ); ?>" name="<?php echo $this->get_field_name( 'form_title' ); ?>" type="text" value="<?php echo esc_attr( $form_title ); ?>" style="width: 30%" />
-			</label>
+			<label style="display:block;" for="<?php echo $this->get_field_id( 'form_title' ); ?>"><?php _e( 'Login Form Title', 'hnla' ); ?> </label>
+			<input style="width: 200px" class="widefat" id="<?php echo $this->get_field_id( 'form_title' ); ?>" name="<?php echo $this->get_field_name( 'form_title' ); ?>" type="text" value="<?php echo esc_attr( $form_title ); ?>" style="width: 30%" />			
 		</p>
 		<p>
 			<label for="enable-notices-loop"><?php _e( 'Enable Notifications List', 'hnla' ); ?> 
