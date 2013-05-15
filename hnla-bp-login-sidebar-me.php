@@ -71,10 +71,17 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 				<p><a class="logout" href="<?php echo wp_logout_url( bp_get_root_domain() ) ?>"><?php _e( 'Log Out', 'buddypress' ) ?></a></p>
 				
 			</div>
-					
-		</div>
-
- 	<div id="user-sidebar-notifications">
+			
+			<?php if( 1 == $instance['profile_links'] ) { ?>		
+			<div id="user-profile-links">
+				<ul class="user-links-list">
+					<li class="profile-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>profile/edit/"><?php _e('Edit your profile', 'hnla'); ?></a></li>
+					<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>settings/"><?php _e('Change your settings', 'hnla'); ?></a></li>
+				</ul>		
+			</div>
+		 	<?php } ?>
+			
+			<div id="user-sidebar-notifications">
 
 	<?php if( 1 == $instance['notify_list'] ) : // showing or hidding the list? ?>
 	<?php if( $notifications = bp_core_get_notifications_for_user( bp_loggedin_user_id() ) ) : ?>
@@ -102,11 +109,11 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			
 			</ul>
 	
-	<?php } //end ul notices loop?>		
+	<?php } //end ul notices loop ?>		
 	
 	<?php else: ?>
 	
-	<h3 class="notification-title logged-in-user"><?php _e('No new notifications ', 'hnla') ?></h3>
+		<h3 class="notification-title logged-in-user"><?php _e('No new notifications ', 'hnla') ?></h3>
 		
 	<?php endif; // end if has notices ?>
 	<?php endif; // end if showing notices list ?>
@@ -117,7 +124,9 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	
 	<?php do_action( 'bp_sidebar_me' ) ?>
 	
-	</div><!-- / #user-sidebar-notifications-menu -->
+		</div><!-- / #user-sidebar-notifications-menu -->
+	
+	</div><!-- / #sidebar-me -->
 	
 	<?php do_action( 'bp_after_sidebar_me' ) ?>
  
@@ -167,6 +176,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
 		$instance['form_title'] = sanitize_text_field( $new_instance['form_title'] );
 		$instance['notify_list'] = absint( strip_tags( $new_instance['notify_list'] ) );
+		$instance['profile_links'] = absint( strip_tags( $new_instance['profile_links'] ) );
 		$instance['avatar_height'] = sanitize_text_field( $new_instance['avatar_height'] );
 		$instance['avatar_width'] = sanitize_text_field( $new_instance['avatar_width'] );
 
@@ -174,36 +184,42 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'form_title' => '', 'notify_list' => 0, 'avatar_height' => '50', 'avatar_width' => '50') );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'form_title' => '', 'notify_list' => 0, 'profile_links' => 0, 'avatar_height' => '50', 'avatar_width' => '50') );
 		$title = strip_tags( $instance['title'] );
 		$form_title = strip_tags( $instance['form_title'] );
 		$notify_list = $instance['notify_list'];
+		$profile_links = $instance['profile_links'];
 		$avatar_height = strip_tags( $instance['avatar_height'] );
 		$avatar_width = strip_tags( $instance['avatar_width'] );
 		?>
 		<p><?php _e('Title and form title will switch depending on login/logout view, leave empty if no display wanted.', 'hnla'); ?></p>
 		<p>
 			<label style="display:block;" for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget Title', 'hnla' ); ?></label>
-			<input style="width: 200px" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" style="width: 30%" />			
+			<input style="width: 80%" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />			
 		</p>
 		<p>
 			<label style="display:block;" for="<?php echo $this->get_field_id( 'form_title' ); ?>"><?php _e( 'Login Form Title', 'hnla' ); ?> </label>
-			<input style="width: 200px" class="widefat" id="<?php echo $this->get_field_id( 'form_title' ); ?>" name="<?php echo $this->get_field_name( 'form_title' ); ?>" type="text" value="<?php echo esc_attr( $form_title ); ?>" style="width: 30%" />			
+			<input style="width: 80%" class="widefat" id="<?php echo $this->get_field_id( 'form_title' ); ?>" name="<?php echo $this->get_field_name( 'form_title' ); ?>" type="text" value="<?php echo esc_attr( $form_title ); ?>" />			
 		</p>
 		<p>
 			<label for="enable-notices-loop"><?php _e( 'Enable Notifications List', 'hnla' ); ?> 
-				<input class="widefat" id="enable-notices-loop" name="<?php echo $this->get_field_name( 'notify_list' ); ?>" type="checkbox" value="1" <?php checked( esc_attr( $notify_list ) , 1 , true) ?> style="width: 30%" />
+				<input style="width: 20%;" class="widefat" id="enable-notices-loop" name="<?php echo $this->get_field_name( 'notify_list' ); ?>" type="checkbox" value="1" <?php checked( esc_attr( $notify_list ) , 1 , true) ?> />
+			</label>
+		</p>
+		<p>
+			<label for="enable-profile-links"><?php _e( 'Enable profile links', 'hnla' ); ?> 
+				<input style="width: 20%;" class="widefat" id="enable-profile-links" name="<?php echo $this->get_field_name( 'profile_links' ); ?>" type="checkbox" value="1" <?php checked( esc_attr( $profile_links ) , 1 , true) ?> />
 			</label>
 		</p>
 		<p><?php _e('Manage member avatar width & height - numeric values only i.e 50', 'hnla') ?></p>
 		<p>
 			<label for="hnla-avatar-height"><?php _e( 'Avatar height', 'hnla' ); ?> 
-				<input class="widefat" id="hnla-avatar-height" name="<?php echo $this->get_field_name( 'avatar_height' ); ?>" type="text" value="<?php echo esc_attr( $avatar_height ); ?>" style="width: 30%" />
+				<input style="width: 20%;" class="widefat" id="hnla-avatar-height" maxlength="4" name="<?php echo $this->get_field_name( 'avatar_height' ); ?>" type="text" value="<?php echo esc_attr( $avatar_height ); ?>" />
 			</label>
 		</p>
 		<p>
 			<label for="hnla-avatar-width"><?php _e( 'Avatar width', 'hnla' ); ?> 
-				<input class="widefat" id="hnla-avatar-width" name="<?php echo $this->get_field_name( 'avatar_width' ); ?>" type="text" value="<?php echo esc_attr( $avatar_width ); ?>" style="width: 30%" />
+				<input style="width: 20%;" class="widefat" id="hnla-avatar-width" maxlength="4" name="<?php echo $this->get_field_name( 'avatar_width' ); ?>" type="text" value="<?php echo esc_attr( $avatar_width ); ?>" />
 			</label>
 		</p>			
 	<?php
