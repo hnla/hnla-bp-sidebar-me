@@ -119,6 +119,19 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	<?php endif; // end if showing notices list ?>
 	
 		<?php if ( bp_is_active( 'messages' ) ) : ?>
+		<?php
+			// get rid of the horror that is notices splashed across the site via wp_footer
+			function remove_legacies_sitewide_notices() {
+			?>
+				<script type="text/javascript" >
+					jQuery(document).ready(function() {
+						jQuery('#sitewide-notice').remove();
+					});
+				</script>
+			<?php
+			}
+			add_action('wp_footer', 'remove_legacies_sitewide_notices');
+			?>
 			<?php bp_message_get_notices(); /* Site wide notices to all users */ ?>
 		<?php endif; ?>	
 	
