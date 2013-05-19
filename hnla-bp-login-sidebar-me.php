@@ -76,7 +76,8 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			<div id="user-profile-links">
 				<ul class="user-links-list">
 					<li class="profile-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>profile/edit/"><?php _e('Edit your profile', 'hnla'); ?></a></li>
-					<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>settings/"><?php _e('Change your settings', 'hnla'); ?></a></li>
+					<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>settings/"><?php _e('Change your email or password', 'hnla'); ?></a></li>
+					<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>profile/change-avatar/"><?php _e('change your Avatar', 'hnla'); ?></a></li>
 				</ul>		
 			</div>
 		 	<?php } ?>
