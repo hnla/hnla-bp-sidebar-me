@@ -114,7 +114,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	
 	<?php else: ?>
 	
-		<h3 class="notification-title logged-in-user"><?php _e('No new notifications ', 'hnla') ?></h3>
+		<p class="notification-title logged-in-user"><?php _e('No new notifications ', 'hnla') ?></p>
 		
 	<?php endif; // end if has notices ?>
 	<?php endif; // end if showing notices list ?>
