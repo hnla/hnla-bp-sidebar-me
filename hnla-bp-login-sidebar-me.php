@@ -14,9 +14,10 @@
 *
 * This widget provides a customised version of the BP 'sidebar me' & login form found in bp-default sidebar.php
 * The login form is modified slightly from the original with just a simple register link.
-* Site wide messages are included in logged in view
-* A customised notifications loop is provided to show the users personal notices of @mentions, messages etc.
-*
+*  * Site wide messages are included in logged in view.
+*  * Essential profile links displayed.
+*  * A customised notifications loop is provided to show the users personal notices of @mentions, messages etc.
+*  * Avatar dimension can be set.
 */
  
 
@@ -36,7 +37,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 
 		extract( $args );
 		
-		// What title should we show, loggedin title or form title?
+		// Which title should we show, loggedin title or form title?
 		if( ! is_user_logged_in() ):
 			$box_title = esc_attr( $instance['form_title'] );
 		else:
@@ -44,6 +45,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 		endif;
 		
 		echo $before_widget;
+		// Only show h# tag if text passed through
 		if( ''!== $box_title ) {
 		echo $before_title .
 		     $box_title .
@@ -110,18 +112,19 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			
 			</ul>
 	
-	<?php } //end ul notices loop ?>		
+	<?php } //end ul private messages loop ?>		
 	
 	<?php else: ?>
 	
-		<p class="notification-title logged-in-user"><?php _e('No new notifications ', 'hnla') ?></p>
+		<p class="notification-title logged-in-user"><?php _e('No new messages ', 'hnla') ?></p>
 		
 	<?php endif; // end if has notices ?>
 	<?php endif; // end if showing notices list ?>
 	
-		<?php if ( bp_is_active( 'messages' ) ) : ?>
+		<?php if ( bp_is_active( 'messages' )  ) : ?>
 		<?php
-			// get rid of the horror that is notices splashed across the site via wp_footer
+			// Remove notices added via WP_footer in BP legacy class if user has enabled widget notice display
+			if( class_exists('BP_Legacy') && 1 == $instance['sitewide_notice'] ) :
 			function remove_legacies_sitewide_notices() {
 			?>
 				<script type="text/javascript" >
@@ -132,8 +135,13 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			<?php
 			}
 			add_action('wp_footer', 'remove_legacies_sitewide_notices');
+			endif;
 			?>
-			<?php bp_message_get_notices(); /* Site wide notices to all users */ ?>
+			
+			<?php if( 1 == $instance['sitewide_notice'] ) : // show/hide sitewide ?>
+				<?php bp_message_get_notices(); /* Site wide notices to all users */ ?>
+			<?php endif; ?>
+		
 		<?php endif; ?>	
 	
 	<?php do_action( 'bp_sidebar_me' ) ?>
@@ -151,22 +159,24 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	<?php if ( bp_get_signup_allowed() ) : ?>
 	
 	<div id="login_area">
-		<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" method="post">
+	<?php //wp_login_form(); // possibly replace BP form with WP one. ?>
+		<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php' ); ?>" method="post">
 			
-			<label for="sidebar-user-login"><?php _e( 'Username', 'buddypress' ); ?></label>
+			<label for="sidebar-user-login"><?php _e( 'Username', 'hnla' ); ?></label>
 			<input type="text" name="log" id="sidebar-user-login" class="input" value="<?php if ( isset( $user_login) ) echo esc_attr(stripslashes($user_login)); ?>" />
 
-			<label for="sidebar-user-pass"><?php _e( 'Password', 'buddypress' ); ?></label>
+			<label for="sidebar-user-pass"><?php _e( 'Password', 'hnla' ); ?></label>
 			<input type="password" name="pwd" id="sidebar-user-pass" class="input" value="" />
 
-			<p class="forgetmenot"><label><input name="rememberme" type="checkbox" id="sidebar-rememberme" value="forever" /> <?php _e( 'Remember Me', 'buddypress' ); ?></label></p>
+			<p class="forgetmenot"><label><input name="rememberme" type="checkbox" id="sidebar-rememberme" value="forever" /> <?php _e( 'Remember Me', 'hnla' ); ?></label></p>
 
-			<p><a href="<?php echo bp_get_signup_page() ?>">Register</a> | <a href="<?php echo wp_lostpassword_url( get_bloginfo('url') ); ?>">Lost your password?</a></p>
+			<p><a href="<?php echo bp_get_signup_page() ?>">Register</a> | <a href="<?php echo wp_lostpassword_url( get_bloginfo('url') ); ?>"><?php _e('(Lost your password?', 'hnla') ?></a></p>
 			
 			<?php do_action( 'bp_sidebar_login_form' ); ?>
 			
-			<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e( 'Log In', 'buddypress' ); ?>" />
+			<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e( 'Log In', 'hnla' ); ?>" />
 			<input type="hidden" name="testcookie" value="1" />
+			<!--<input type="hidden" value="http://bp-1-7.dev/groups/2012-tester/" name="redirect_to">-->
 		
 		</form>
 	</div>
@@ -190,6 +200,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
 		$instance['form_title'] = sanitize_text_field( $new_instance['form_title'] );
 		$instance['notify_list'] = absint( strip_tags( $new_instance['notify_list'] ) );
+		$instance['sitewide_notice'] = absint( strip_tags( $new_instance['sitewide_notice'] ) );
 		$instance['profile_links'] = absint( strip_tags( $new_instance['profile_links'] ) );
 		$instance['avatar_height'] = sanitize_text_field( $new_instance['avatar_height'] );
 		$instance['avatar_width'] = sanitize_text_field( $new_instance['avatar_width'] );
@@ -202,22 +213,28 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 		$title = strip_tags( $instance['title'] );
 		$form_title = strip_tags( $instance['form_title'] );
 		$notify_list = $instance['notify_list'];
+		$sitewide_notice = $instance['sitewide_notice'];
 		$profile_links = $instance['profile_links'];
 		$avatar_height = strip_tags( $instance['avatar_height'] );
 		$avatar_width = strip_tags( $instance['avatar_width'] );
 		?>
 		<p><?php _e('Title and form title will switch depending on login/logout view, leave empty if no display wanted.', 'hnla'); ?></p>
 		<p>
-			<label style="display:block;" for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Widget Title', 'hnla' ); ?></label>
+			<label style="display:block;" for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Logged in widget title', 'hnla' ); ?></label>
 			<input style="width: 80%" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />			
 		</p>
 		<p>
-			<label style="display:block;" for="<?php echo $this->get_field_id( 'form_title' ); ?>"><?php _e( 'Login Form Title', 'hnla' ); ?> </label>
+			<label style="display:block;" for="<?php echo $this->get_field_id( 'form_title' ); ?>"><?php _e( 'Logged out widget Form Title', 'hnla' ); ?> </label>
 			<input style="width: 80%" class="widefat" id="<?php echo $this->get_field_id( 'form_title' ); ?>" name="<?php echo $this->get_field_name( 'form_title' ); ?>" type="text" value="<?php echo esc_attr( $form_title ); ?>" />			
 		</p>
 		<p>
-			<label for="enable-notices-loop"><?php _e( 'Enable Notifications List', 'hnla' ); ?> 
+			<label for="enable-notices-loop"><?php _e( 'Enable PM messages list', 'hnla' ); ?> 
 				<input style="width: 20%;" class="widefat" id="enable-notices-loop" name="<?php echo $this->get_field_name( 'notify_list' ); ?>" type="checkbox" value="1" <?php checked( esc_attr( $notify_list ) , 1 , true) ?> />
+			</label>
+		</p>
+		<p>
+			<label for="enable-sitewide"><?php _e( 'Enable sitewide Notices - (enabling sitewide also removes BP legacy handling of sitewide notices)', 'hnla' ); ?> 
+				<input style="width: 20%;" class="widefat" id="enable-sitewide" name="<?php echo $this->get_field_name( 'sitewide_notice' ); ?>" type="checkbox" value="1" <?php checked( esc_attr( $sitewide_notice ) , 1 , true) ?> />
 			</label>
 		</p>
 		<p>
