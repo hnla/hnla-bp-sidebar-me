@@ -20,6 +20,10 @@
 *  * Avatar dimension can be set.
 */
  
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+if( function_exists('bp_loaded') ) {
 
 function hnla_bp_sidebar_me_register_widget() {
 	add_action('widgets_init', create_function('', 'return register_widget("HNLA_bp_sidebar_me_Widget");') );
@@ -86,8 +90,9 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			
 			<div id="user-sidebar-notifications">
 
-	<?php if( 1 == $instance['notify_list'] ) : // showing or hidding the list? ?>
-	<?php if( $notifications = bp_core_get_notifications_for_user( bp_loggedin_user_id() ) ) : ?>
+			<?php if( 1 == $instance['notify_list'] ) : // showing or hidding the list? ?>
+			
+			<?php if( $notifications = bp_core_get_notifications_for_user( bp_loggedin_user_id() ) ) : ?>
 				
 			<h3 class="notification-title logged-in-user">
 				<a href="<?php echo bp_loggedin_user_domain(); ?>" title="Go to your account or click the specific notice links below">
@@ -134,7 +139,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 				</script>
 			<?php
 			}
-			add_action('wp_footer', 'remove_legacies_sitewide_notices');
+			add_action('wp_footer', 'remove_legacies_sitewide_notices');			
 			endif;
 			?>
 			
@@ -258,4 +263,5 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	
 }
 
+}//close if bp_loaded
 ?>
