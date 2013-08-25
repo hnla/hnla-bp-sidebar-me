@@ -70,7 +70,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 				</a>
 
 				<p class="user-link clearfix"><span class="your-name"><?php echo bp_core_get_userlink( bp_loggedin_user_id() ); ?></span></p>
-				<p><a class="logout" href="<?php echo wp_logout_url( bp_get_root_domain() ) ?>"><?php _e( 'Log Out', 'buddypress' ) ?></a></p>
+				<p><a class="logout" href="<?php echo wp_logout_url( bp_get_root_domain() ) ?>"><?php _e( 'Log Out', 'hnla' ) ?></a></p>
 				
 			</div>
 			
@@ -91,7 +91,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 				
 			<h3 class="notification-title logged-in-user">
 				<a href="<?php echo bp_loggedin_user_domain(); ?>" title="Go to your account or click the specific notice links below">
-					<?php _e( 'Notifications', 'buddypress' ); ?>
+					<?php _e( 'Notifications', 'hnla' ); ?>
  				<span><?php echo count( $notifications ) ?></span>
 				</a>
 			</h3>
@@ -116,7 +116,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	
 	<?php else: ?>
 	
-		<p class="notification-title logged-in-user"><?php _e('No new messages ', 'hnla') ?></p>
+		<p class="notification-title logged-in-user"><?php _e('No New Notifications ', 'hnla') ?></p>
 		
 	<?php endif; // end if has notices ?>
 	<?php endif; // end if showing notices list ?>
@@ -228,7 +228,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			<input style="width: 80%" class="widefat" id="<?php echo $this->get_field_id( 'form_title' ); ?>" name="<?php echo $this->get_field_name( 'form_title' ); ?>" type="text" value="<?php echo esc_attr( $form_title ); ?>" />			
 		</p>
 		<p>
-			<label for="enable-notices-loop"><?php _e( 'Enable PM messages list', 'hnla' ); ?> 
+			<label for="enable-notices-loop"><?php _e( 'Enable Notifications list', 'hnla' ); ?> 
 				<input style="width: 20%;" class="widefat" id="enable-notices-loop" name="<?php echo $this->get_field_name( 'notify_list' ); ?>" type="checkbox" value="1" <?php checked( esc_attr( $notify_list ) , 1 , true) ?> />
 			</label>
 		</p>
