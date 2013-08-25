@@ -6,7 +6,7 @@
  * Author:      Hugo Ashmore hnla 
  * Author URI:  http://buddypress.org/community/hnla/
  * Version:     1.0
- * Text Domain: buddypress
+ * Text Domain: hnla
  * Domain Path: 
  * License:     GPLv2 or later (license.txt)
  */
