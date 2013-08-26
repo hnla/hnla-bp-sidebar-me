@@ -3,7 +3,7 @@
  * Plugin Name: hnla Buddypress sidebar & login widget
  * Plugin URI:  http://github/hnla
  * Description: Add login form, BP sidebar username,/avater, sitewide messages & notifications loop an adaptation & extension of the BP sidebar function from bp-default.
- * Author:      Hugo Ashmore hnla 
+ * Author:      Hugo Ashmore (hnla) 
  * Author URI:  http://buddypress.org/community/hnla/
  * Version:     1.0
  * Text Domain: hnla
@@ -24,6 +24,11 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 if( function_exists('bp_loaded') ) {
+
+// Setup translatable
+$hnla_bp_sidebar_me_mo = WP_PLUGIN_DIR . "/hnla_bp_sidebar_me/languages/hnla_sidebar_me-" . get_locale() . ".mo";
+if ( file_exists( $hnla_bp_sidebar_me_mo ) )
+	load_plugin_textdomain( 'hnla', $hnla_bp_sidebar_me_mo );
 
 function hnla_bp_sidebar_me_register_widget() {
 	add_action('widgets_init', create_function('', 'return register_widget("HNLA_bp_sidebar_me_Widget");') );
@@ -126,28 +131,34 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	<?php endif; // end if has notices ?>
 	<?php endif; // end if showing notices list ?>
 	
-		<?php if ( bp_is_active( 'messages' )  ) : ?>
-		<?php
+	<?php 
+		 // Display sitewide notices if comp active & check BP_legacy to remove footer sitewide
+		if ( bp_is_active( 'messages' )  ) : 
+			
 			// Remove notices added via WP_footer in BP legacy class if user has enabled widget notice display
 			if( class_exists('BP_Legacy') && 1 == $instance['sitewide_notice'] ) :
-			function remove_legacies_sitewide_notices() {
+
+			function remove_legacys_sitewide_notices() {
 			?>
-				<script type="text/javascript" >
+				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery('#sitewide-notice').remove();
 					});
 				</script>
 			<?php
 			}
-			add_action('wp_footer', 'remove_legacies_sitewide_notices');			
+			add_action('wp_footer', 'remove_legacys_sitewide_notices');
+				
 			endif;
 			?>
 			
-			<?php if( 1 == $instance['sitewide_notice'] ) : // show/hide sitewide ?>
-				<?php bp_message_get_notices(); /* Site wide notices to all users */ ?>
-			<?php endif; ?>
+			<?php 
+			// Show Sitewide messages if user set in widget opts
+			if( 1 == $instance['sitewide_notice'] ) : 
+				bp_message_get_notices();
+			endif; 
 		
-		<?php endif; ?>	
+		 endif; ?>	
 	
 	<?php do_action( 'bp_sidebar_me' ) ?>
 	
