@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: hnla-bp-sidebar-me\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-26 09:23-0000\n"
+"PO-Revision-Date: 2013-08-26 09:23-0000\n"
+"Last-Translator: Hugo - hnla <hugo.ashmore@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: E:\\www\\vhost\\bp-1-7.dev\\site\\htdocs\\wp-content\\plugins\\hnla-bp-sidebar-me\n"
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:41
+msgid "BP sidebar-me, notifications list, site wide messages & login"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:82
+msgid "Log Out"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:89
+msgid "Edit your profile"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:90
+msgid "Change your email or password"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:91
+msgid "change your Avatar"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:104
+msgid "Notifications"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:129
+msgid "No New Notifications "
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:175
+msgid "Username"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:178
+msgid "Password"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:181
+msgid "Remember Me"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:183
+msgid "(Lost your password?"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:187
+msgid "Log In"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:231
+msgid "Title and form title will switch depending on login/logout view, leave empty if no display wanted."
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:233
+msgid "Logged in widget title"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:237
+msgid "Logged out widget Form Title"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:241
+msgid "Enable Notifications list"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:246
+msgid "Enable sitewide Notices - (enabling sitewide also removes BP legacy handling of sitewide notices)"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:251
+msgid "Enable profile links"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:255
+msgid "Manage member avatar width & height - numeric values only i.e 50"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:257
+msgid "Avatar height"
+msgstr ""
+
+#: E:\www\vhost\bp-1-7.dev\site\htdocs\wp-content\plugins\hnla-bp-sidebar-me/hnla-bp-login-sidebar-me.php:262
+msgid "Avatar width"
+msgstr ""
+
