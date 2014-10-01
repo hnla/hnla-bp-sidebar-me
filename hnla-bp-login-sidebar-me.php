@@ -132,11 +132,13 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	<?php endif; // end if showing notices list ?>
 	
 	<?php 
-		 // Display sitewide notices if comp active & check BP_legacy to remove footer sitewide
+		 // Display sitewide notices if message component active & check BP_legacy to remove footer sitewide
 		if ( bp_is_active( 'messages' )  ) : 
 			
-			// Remove notices added via WP_footer in BP legacy class if user has enabled widget notice display
-			if( class_exists('BP_Legacy') && 1 == $instance['sitewide_notice'] ) :
+			// Remove notices added via WP_footer in BP legacy class if user has enabled widget sitewide notice display
+			// but isn't using the BP sitewide notice widget which would deal with removing the footer notice for us.
+			if( class_exists('BP_Legacy') && 1 == $instance['sitewide_notice']
+				&& ! is_active_widget( false, false, 'bp_messages_sitewide_notices_widget', true ) ) :
 
 			function remove_legacy_sitewide_notices() {
 			?>
