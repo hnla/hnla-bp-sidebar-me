@@ -194,7 +194,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 
 			<p class="forgetmenot"><label><input name="rememberme" type="checkbox" id="sidebar-rememberme" value="forever" /> <?php _e( 'Remember Me', 'hnla' ); ?></label></p>
 
-			<p><a href="<?php echo bp_get_signup_page() ?>">Register</a> | <a href="<?php echo wp_lostpassword_url( get_bloginfo('url') ); ?>"><?php _e('(Lost your password?', 'hnla') ?></a></p>
+			<p><a href="<?php echo bp_get_signup_page() ?>">Register</a> | <a href="<?php echo wp_lostpassword_url( get_bloginfo('url') ); ?>"><?php _e('Lost your password?', 'hnla') ?></a></p>
 			
 			<?php do_action( 'bp_sidebar_login_form' ); ?>
 			
