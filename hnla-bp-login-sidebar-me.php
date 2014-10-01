@@ -59,7 +59,11 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 		echo $before_title .
 		     $box_title .
 		     $after_title; 
-		}?>
+		}
+
+		// Set avatar dimensions if user value passed, otherwise leave empty for BP defaults
+		$hnla_avatar_dimensions = (!empty($instance['avatar_width']) && !empty($instance['avatar_height']) )? 'type=thumb&width=' . esc_attr( $instance['avatar_width'] ) . '&height=' . esc_attr( $instance['avatar_height'] ) . '' : '';
+	?>
 
 	
 <?php ####### Show the thing on the front end  ######## ?>
@@ -70,27 +74,27 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
  
 		<?php do_action( 'bp_before_sidebar_me' ) ?>
 
-		<div id="sidebar-me">
+			<div id="sidebar-me">
 			
-			<div id="sidebar-me-user">
+				<div id="sidebar-me-user">
 			
-				<a href="<?php echo bp_loggedin_user_domain() ?>">
-				<?php bp_loggedin_user_avatar( 'type=thumb&width=' . esc_attr( $instance['avatar_width'] ) . '&height=' . esc_attr( $instance['avatar_height'] ) . '' ) ?>
-				</a>
+					<a href="<?php echo bp_loggedin_user_domain() ?>">
+					<?php bp_loggedin_user_avatar( $hnla_avatar_dimensions ) ?>
+					</a>
 
-				<p class="user-link clearfix"><span class="your-name"><?php echo bp_core_get_userlink( bp_loggedin_user_id() ); ?></span></p>
-				<p><a class="logout" href="<?php echo wp_logout_url( bp_get_root_domain() ) ?>"><?php _e( 'Log Out', 'hnla' ) ?></a></p>
+					<p class="user-link clearfix"><span class="your-name"><?php echo bp_core_get_userlink( bp_loggedin_user_id() ); ?></span></p>
+					<p><a class="logout" href="<?php echo wp_logout_url( bp_get_root_domain() ) ?>"><?php _e( 'Log Out', 'hnla' ) ?></a></p>
 				
-			</div>
+				</div>
 			
 			<?php if( 1 == $instance['profile_links'] ) { ?>		
-			<div id="user-profile-links">
-				<ul class="user-links-list">
-					<li class="profile-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>profile/edit/"><?php _e('Edit your profile', 'hnla'); ?></a></li>
-					<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>settings/"><?php _e('Change your email or password', 'hnla'); ?></a></li>
-					<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>profile/change-avatar/"><?php _e('change your Avatar', 'hnla'); ?></a></li>
-				</ul>		
-			</div>
+				<div id="user-profile-links">
+					<ul class="user-links-list">
+						<li class="profile-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>profile/edit/"><?php _e('Edit your profile', 'hnla'); ?></a></li>
+						<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>settings/"><?php _e('Change your email or password', 'hnla'); ?></a></li>
+						<li class="settings-edit-link"><a href="<?php echo bp_core_get_user_domain( bp_loggedin_user_id() ) ?>profile/change-avatar/"><?php _e('change your Avatar', 'hnla'); ?></a></li>
+					</ul>		
+				</div>
 		 	<?php } ?>
 			
 			<div id="user-sidebar-notifications">
@@ -140,16 +144,16 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			if( class_exists('BP_Legacy') && 1 == $instance['sitewide_notice']
 				&& ! is_active_widget( false, false, 'bp_messages_sitewide_notices_widget', true ) ) :
 
-			function remove_legacy_sitewide_notices() {
-			?>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery('#sitewide-notice').remove();
-					});
-				</script>
-			<?php
-			}
-			add_action('wp_footer', 'remove_legacy_sitewide_notices');
+				function remove_legacy_sitewide_notices() {
+				?>
+					<script type="text/javascript">
+						jQuery(document).ready(function() {
+							jQuery('#sitewide-notice').remove();
+						});
+					</script>
+				<?php
+				}
+				add_action('wp_footer', 'remove_legacy_sitewide_notices');
 				
 			endif;
 			?>
@@ -160,7 +164,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 				bp_message_get_notices();
 			endif; 
 		
-		 endif; ?>	
+		endif; ?>	
 	
 	<?php do_action( 'bp_sidebar_me' ) ?>
 	
@@ -177,7 +181,9 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 	<?php if ( bp_get_signup_allowed() ) : ?>
 	
 	<div id="login_area">
+
 	<?php //wp_login_form(); // possibly replace BP form with WP one. ?>
+
 		<form name="login-form" id="sidebar-login-form" class="standard-form" action="<?php echo site_url( 'wp-login.php' ); ?>" method="post">
 			
 			<label for="sidebar-user-login"><?php _e( 'Username', 'hnla' ); ?></label>
@@ -195,6 +201,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e( 'Log In', 'hnla' ); ?>" />
 					
 		</form>
+
 	</div>
 	
 	<?php do_action( 'bp_after_sidebar_login_form' ); ?>
