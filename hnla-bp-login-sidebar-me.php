@@ -138,7 +138,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			// Remove notices added via WP_footer in BP legacy class if user has enabled widget notice display
 			if( class_exists('BP_Legacy') && 1 == $instance['sitewide_notice'] ) :
 
-			function remove_legacys_sitewide_notices() {
+			function remove_legacy_sitewide_notices() {
 			?>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
@@ -147,7 +147,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 				</script>
 			<?php
 			}
-			add_action('wp_footer', 'remove_legacys_sitewide_notices');
+			add_action('wp_footer', 'remove_legacy_sitewide_notices');
 				
 			endif;
 			?>
