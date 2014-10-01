@@ -153,7 +153,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			?>
 			
 			<?php 
-			// Show Sitewide messages if user set in widget opts
+			// Show Sitewide messages if user enabled in widget options
 			if( 1 == $instance['sitewide_notice'] ) : 
 				bp_message_get_notices();
 			endif; 
@@ -191,9 +191,7 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 			<?php do_action( 'bp_sidebar_login_form' ); ?>
 			
 			<input type="submit" name="wp-submit" id="sidebar-wp-submit" value="<?php _e( 'Log In', 'hnla' ); ?>" />
-			<input type="hidden" name="testcookie" value="1" />
-			<!--<input type="hidden" value="http://bp-1-7.dev/groups/2012-tester/" name="redirect_to">-->
-		
+					
 		</form>
 	</div>
 	
