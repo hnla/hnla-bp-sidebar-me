@@ -153,16 +153,20 @@ class HNLA_bp_sidebar_me_Widget extends WP_Widget {
 					</script>
 				<?php
 				}
-				add_action('wp_footer', 'remove_legacy_sitewide_notices');
+				add_action('wp_footer', 'remove_legacy_sitewide_notices', 9);
 				
 			endif;
 			?>
 			
 			<?php 
 			// Show Sitewide messages if user enabled in widget options
-			if( 1 == $instance['sitewide_notice'] ) : 
-				bp_message_get_notices();
-			endif; 
+			if( 1 == $instance['sitewide_notice'] ) : ?>
+
+			<div class="sitewide-notice">
+			<?php	bp_message_get_notices(); ?>
+			</div>
+
+			<?php endif; 
 		
 		endif; ?>	
 	
